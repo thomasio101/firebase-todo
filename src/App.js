@@ -1,13 +1,13 @@
 import SignInWrapper from "./SignInWrapper";
-import SignOutButton from "./SignOutButton";
 import TodoList from "./TodoList";
 import "./App.css";
+import Navbar from "./Navbar";
 
 function App() {
   return (
-    <div class="app">
+    <div className="app">
       <SignInWrapper>
-        <SignOutButton />
+        <Navbar />
         <TodoList />
       </SignInWrapper>
     </div>

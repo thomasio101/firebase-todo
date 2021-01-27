@@ -1,9 +1,8 @@
-import './firebaseBoilerplate';
+import { auth } from './firebaseBoilerplate';
 import firebase from 'firebase/app';
 import 'firebase/firebase-auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
 /**

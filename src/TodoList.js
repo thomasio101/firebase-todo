@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './firebaseBoilerplate';
+import { auth, firestore } from './firebaseBoilerplate';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -7,8 +7,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useUniqueId } from './utils';
 import './TodoList.css';
 
-const firestore = firebase.firestore();
-const auth = firebase.auth();
 
 export default function TodoList() {
     const todosRef = useTodosRef();
