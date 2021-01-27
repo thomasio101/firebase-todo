@@ -3,13 +3,14 @@ import './firebaseBoilerplate';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useUniqueId } from './utils';
 
 const firestore = firebase.firestore();
+const auth = firebase.auth();
 
 export default function TodoList() {
-    const todosRef = firestore.collection('todos');
-
+    const todosRef = useTodosRef();
     const [todos] = useCollectionData(todosRef, { idField: 'id' });
 
     return (
@@ -23,7 +24,8 @@ export default function TodoList() {
 }
 
 function Todo({ todo }) {
-    const todoRef = firestore.collection('todos').doc(todo.id);
+    const todoRef = useTodosRef().doc(todo.id);
+    
     const uniqueId = useUniqueId();
 
     /**
@@ -44,7 +46,7 @@ function Todo({ todo }) {
 }
 
 function AddTodoForm() {
-    const todosRef = firestore.collection('todos');
+    const todosRef = useTodosRef();
 
     const [title, setTitle] = useState("");
 
@@ -66,4 +68,9 @@ function AddTodoForm() {
             <button type="submit">Add</button>
         </form>
     )
+}
+
+function useTodosRef() {
+    const [user] = useAuthState(auth);
+    return firestore.collection('users').doc(user?.uid).collection('todos')
 }
