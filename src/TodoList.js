@@ -14,9 +14,11 @@ export default function TodoList() {
 
     return (
         <div className="todo-list">
+            {
             <ul>
-                {todos?.map(todo => <Todo todo={todo} key={todo.id}></Todo>)}
+                {(todos?.length ?? 0) > 0 ? todos?.map(todo => <Todo todo={todo} key={todo.id}></Todo>) : "Geen todos"}
             </ul>
+            }
             <AddTodoForm />
         </div>
     );
@@ -60,15 +62,17 @@ function DeleteButton({todo}) {
 function AddTodoForm() {
     const todosRef = useTodosRef();
 
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState('');
 
     /**
      * @param {Event} e 
      */
-    const addTodo = async (e) => {
+    const addTodo = (e) => {
+        setTitle('');
+        
         e.preventDefault();
 
-        await todosRef.add({
+        todosRef.add({
             title,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
@@ -77,7 +81,7 @@ function AddTodoForm() {
     return (
         <form onSubmit={addTodo} className="todo-form">
             <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
-            <button type="submit">Add</button>
+            <button type="submit">Toevoegen</button>
         </form>
     )
 }
