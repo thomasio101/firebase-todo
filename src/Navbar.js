@@ -21,7 +21,7 @@ function UserChip() {
 
     return (
         <div className="user-chip">
-            <img className="photo" src={user.photoURL}/>
+            <img className="photo" src={user.photoURL} referrerpolicy="no-referrer"/>
             <span className="display-name">
                 {user.displayName}
             </span>
