@@ -3,6 +3,7 @@ import './firebaseBoilerplate';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useUniqueId } from './utils';
 
 const firestore = firebase.firestore();
 
@@ -16,13 +17,14 @@ export default function TodoList() {
             <ul>
                 {todos?.map(todo => <Todo todo={todo} key={todo.id}></Todo>)}
             </ul>
-            <AddTodoForm/>
+            <AddTodoForm />
         </>
     );
 }
 
 function Todo({ todo }) {
     const todoRef = firestore.collection('todos').doc(todo.id);
+    const uniqueId = useUniqueId();
 
     /**
      * @param {boolean} finished 
@@ -35,7 +37,8 @@ function Todo({ todo }) {
 
     return (
         <li>
-            <input type="checkbox" checked={todo.finished} onChange={e => setFinished(e.target.checked)}></input>&nbsp;{todo.title}
+            <input type="checkbox" checked={todo.finished} onChange={e => setFinished(e.target.checked)} id={uniqueId} />
+            <label htmlFor={uniqueId}>&nbsp;{todo.title}</label>
         </li>
     )
 }
@@ -44,7 +47,7 @@ function AddTodoForm() {
     const todosRef = firestore.collection('todos');
 
     const [title, setTitle] = useState("");
-    
+
     /**
      * @param {Event} e 
      */
