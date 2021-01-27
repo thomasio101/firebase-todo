@@ -40,7 +40,7 @@ function Todo({ todo }) {
 
     return (
         <li>
-            <input type="checkbox" checked={todo.finished} onChange={e => setFinished(e.target.checked)} id={uniqueId} />
+            <input type="checkbox" defaultChecked={todo.finished} onChange={e => setFinished(e.target.checked)} id={uniqueId} />
             <label htmlFor={uniqueId}>&nbsp;{todo.title}</label>
             <DeleteButton todo={todo}/>
         </li>
