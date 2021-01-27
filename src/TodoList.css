@@ -36,7 +36,8 @@
 }
 
 .todo-list li .delete-button:hover,
-.todo-list li .delete-button:active {
+.todo-list li .delete-button:active,
+.todo-list li .delete-button:focus {
   background-color: crimson;
   color: white;
 }

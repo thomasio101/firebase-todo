@@ -17,6 +17,7 @@ code {
 input,
 button {
   border: 1px solid gray;
+  background: ghostwhite;
   transition-property: border, background, color;
   transition-duration: 200ms;
 }
@@ -26,7 +27,9 @@ input:not([type="checkbox"]), button {
 }
 
 input:not([type="checkbox"]):focus,
-button:focus {
+button:focus,
+button:hover,
+button:active {
   border: 1px solid #a7d129;
   outline: none;
 }
