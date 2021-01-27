@@ -5,6 +5,7 @@ import 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useUniqueId } from './utils';
+import './TodoList.css';
 
 const firestore = firebase.firestore();
 const auth = firebase.auth();
@@ -14,18 +15,18 @@ export default function TodoList() {
     const [todos] = useCollectionData(todosRef, { idField: 'id' });
 
     return (
-        <>
+        <div className="todo-list">
             <ul>
                 {todos?.map(todo => <Todo todo={todo} key={todo.id}></Todo>)}
             </ul>
             <AddTodoForm />
-        </>
+        </div>
     );
 }
 
 function Todo({ todo }) {
     const todoRef = useTodosRef().doc(todo.id);
-    
+
     const uniqueId = useUniqueId();
 
     /**
@@ -41,8 +42,21 @@ function Todo({ todo }) {
         <li>
             <input type="checkbox" checked={todo.finished} onChange={e => setFinished(e.target.checked)} id={uniqueId} />
             <label htmlFor={uniqueId}>&nbsp;{todo.title}</label>
+            <DeleteButton todo={todo}/>
         </li>
     )
+}
+
+function DeleteButton({todo}) {
+    const todoRef = useTodosRef().doc(todo.id);
+
+    const deleteTodo = async () => {
+        await todoRef.delete();
+    };
+
+    return (
+        <button className="delete-button" onClick={deleteTodo}>&times;</button>
+    );
 }
 
 function AddTodoForm() {
@@ -63,7 +77,7 @@ function AddTodoForm() {
     };
 
     return (
-        <form onSubmit={addTodo}>
+        <form onSubmit={addTodo} className="todo-form">
             <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
             <button type="submit">Add</button>
         </form>
